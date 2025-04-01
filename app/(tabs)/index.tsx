@@ -18,10 +18,9 @@ export default function HomeScreen() {
       const uri = await ImagUpload();
       setLoading(false);
       if(uri){
-        console.log("Image URI in Index:", uri);
         router.push({
           pathname: '/preview',
-          params: { imageUri: uri, imageName: 'Uploaded Image' },
+          params: { imageUri: encodeURIComponent(uri), imageName: 'Uploaded Image' },
         });
       }
       } catch (error) {
@@ -40,7 +39,7 @@ export default function HomeScreen() {
         console.log("Image URI in Index:", uri);
         router.push({
           pathname: '/preview',
-          params: { imageUri: uri, imageName: 'Captured Image' },
+          params: { imageUri: encodeURIComponent(uri), imageName: 'Captured Image' },
         });
       }
       } catch (error) {

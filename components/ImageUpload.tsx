@@ -17,22 +17,25 @@ const ImagUpload = async () => {
 
         
         const permission = await requestPermission();
-        if (!permission) return;
+        if (!permission) return null;
 
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
             allowsEditing: true,
             quality: 1,
             });
-       console.log(result)
+        
+        console.log("Image Picker Result:", result);
+        
         if (result.canceled) {
             Alert.alert('Image selection was canceled');
             return;
         }
-        if (!result.canceled) {
-            Alert.alert('Image selected successfully');
+        if (!result.canceled && result.assets && result.assets.length > 0) {
+            console.log('Image selected successfully:', result.assets[0].uri);
+            return result.assets[0].uri;
         }
-        return result.assets[0].uri;
+    
     } catch (error) {
         console.error('Error selecting image:', error);
         Alert.alert('Error selecting image');
