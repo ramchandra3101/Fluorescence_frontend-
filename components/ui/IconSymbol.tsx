@@ -15,6 +15,13 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'camera.fill': 'photo-camera',
   'folder.fill': 'upload',
+  'clock.fill': 'access-time',
+  'arrow.left': 'arrow-back',
+  'bag.fill': 'image',
+
+  
+
+
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
