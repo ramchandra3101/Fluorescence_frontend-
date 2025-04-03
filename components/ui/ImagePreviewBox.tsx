@@ -13,20 +13,20 @@ const ImagePreviewBox: React.FC<ImagePreviewBoxProps> = ({ imageUri, imageName }
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        console.log("Image URI in ImagePreviewBox:", imageUri);
+        
         
         // Check if the file exists
         FileSystem.getInfoAsync(imageUri).then((fileInfo) => {
-            console.log("File Info:", fileInfo);
+          
             setIsLoading(false);
             if (!fileInfo.exists) {
                 setError("File does not exist");
-                console.error("File does not exist:", imageUri);
+                
             }
         }).catch(err => {
             setIsLoading(false);
             setError(`Error checking file: ${err.message}`);
-            console.error("Error checking file:", err);
+            
         });
     }, [imageUri]);
 

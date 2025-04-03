@@ -25,7 +25,7 @@ export default function HomeScreen() {
       }
       } catch (error) {
         setLoading(false);
-        console.error('Error selecting image:', error);
+       
         Alert.alert('Error selecting image');
       }
   }
@@ -36,7 +36,7 @@ export default function HomeScreen() {
       const uri = await CameraCapture();
       setLoading(false);
       if(uri){
-        console.log("Image URI in Index:", uri);
+        
         router.push({
           pathname: '/preview',
           params: { imageUri: encodeURIComponent(uri), imageName: 'Captured Image' },
@@ -44,7 +44,7 @@ export default function HomeScreen() {
       }
       } catch (error) {
         setLoading(false);
-        console.error('Error capturing image:', error);
+        
         Alert.alert('Error capturing image');
       }
   }
@@ -57,7 +57,7 @@ export default function HomeScreen() {
             <ThemedText  lightColor='white' style={{ textAlign: 'center' }} type="defaultSemiBold">Upload or capture an image to analyze <ThemedText type="defaultSemiBold" style={{ backgroundColor: 'grey' }}> fluorescence </ThemedText> levels </ThemedText>
             <View style={{ flexDirection: 'column', gap: 16, marginTop: 32 }}>
                 <ActionButton icon="camera.fill" title="Capture Image" color='rgba(245, 245, 245, 0.7)' onPress={handleImageCapture} />
-                <ActionButton icon="folder.fill" title={loading?"Loading...":"Uploaded Image"} color='rgba(245, 245, 245, 0.7)' onPress={handleImageUpload}/>
+                <ActionButton icon="folder.fill" title={loading?"Loading...":"Upload Image"} color='rgba(245, 245, 245, 0.7)' onPress={handleImageUpload}/>
             </View>
         </View>
       </ImageBackground>

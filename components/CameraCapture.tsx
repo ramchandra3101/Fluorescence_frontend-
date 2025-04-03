@@ -34,7 +34,7 @@ const CameraCapture = async () => {
 
         return result.assets[0].uri; // Return the captured image URI
     } catch (error) {
-        console.error('Error capturing image:', error);
+        
         Alert.alert('Error capturing image');
     }
 };
