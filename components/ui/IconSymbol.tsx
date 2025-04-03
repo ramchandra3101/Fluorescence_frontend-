@@ -18,9 +18,8 @@ const MAPPING = {
   'clock.fill': 'access-time',
   'arrow.left': 'arrow-back',
   'bag.fill': 'image',
-
-  
-
+  'circle.fill': 'circle',
+  'chart.bar.doc.horizontal.fill': 'bar-chart',
 
 } as Partial<
   Record<

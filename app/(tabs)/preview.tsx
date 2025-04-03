@@ -56,7 +56,6 @@ export default function Preview() {
 
             // Check if component is still mounted before updating state
             if (isMounted.current) {
-                console.log('Response from Backend:', result);
                 
                 if (!result) {
                     console.log('No result from processing');
