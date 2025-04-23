@@ -1,6 +1,7 @@
-const processImage = async(imageUri: string, signal?: AbortSignal) => {
+const processImage = async(imageUri: string, signal?: AbortSignal,useAIProcessing:boolean=false) => {
     try {
-        console.log('Starting image upload to API with URI:', imageUri);
+        console.log(`Starting image upload to ${useAIProcessing ? 'Gemini AI' : 'Standard'} API with URI:`, imageUri);
+
         
         const formData = new FormData();
         formData.append('image', {
@@ -15,13 +16,20 @@ const processImage = async(imageUri: string, signal?: AbortSignal) => {
         // For physical devices, use your computer's actual IP address
         
         // Try one of these URLs based on your setup:
-        const apiUrl = 'http://10.0.0.160:8000/api/process-image/'; // For iOS simulator
+        //const apiUrl = 'http://10.110.54.23:8000/api/process-image/'; // For iOS simulator
         // const apiUrl = 'http://10.0.2.2:8000/api/process-image/'; // For Android emulator
         // const apiUrl = 'http://YOUR_COMPUTER_IP:8000/api/process-image/'; // For physical device
+
+        let apiURL;
+        if (useAIProcessing) {
+            apiURL = 'http://10.110.40.17:8000/geminiapi/process'; // Replace with your actual Gemini AI API URL
+        } else {
+            apiURL = 'http://10.110.40.17:8000/api/process-image/'
+        }
         
-        console.log('Sending request to:', apiUrl);
+        console.log('Sending request to:', apiURL);
         
-        const response = await fetch(apiUrl, {
+        const response = await fetch(apiURL, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -41,6 +49,8 @@ const processImage = async(imageUri: string, signal?: AbortSignal) => {
         
         // Parse the JSON response
         const data = await response.json();
+        data.isAiProcessed = useAIProcessing; // Add the processing type to the response
+
         
         return data;
     }

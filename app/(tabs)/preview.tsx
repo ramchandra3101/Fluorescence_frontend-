@@ -1,4 +1,4 @@
-import { View, StyleSheet, ImageBackground, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ImageBackground, ActivityIndicator, Switch,TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState, useRef } from 'react';
 import ActionButton from '@/components/ui/ActionButton';
@@ -12,6 +12,7 @@ export default function Preview() {
     const [imageUri, setImageUri] = useState<string | null>(null);
     const [imageName, setImageName] = useState<string | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
+    const[useAIProcessing, setUseAIProcessing] = useState(false);
     // Use a ref to track if component is mounted
     const isMounted = useRef(true);
     // Use a ref to store the abort controller
@@ -40,7 +41,8 @@ export default function Preview() {
 
     const handleProcess = async () => {
         setIsProcessing(true);
-        console.log("Processing image...");
+        console.log(`Processing image with ${useAIProcessing ? 'Gemini AI' : 'Standard'} processing...`);
+
         
         if (!imageUri) {
             console.log('No image URI provided');
@@ -52,7 +54,7 @@ export default function Preview() {
         abortControllerRef.current = new AbortController();
         
         try {
-            const result = await processImage(imageUri, abortControllerRef.current.signal);
+            const result = await processImage(imageUri, abortControllerRef.current.signal, useAIProcessing);
 
             // Check if component is still mounted before updating state
             if (isMounted.current) {
@@ -61,9 +63,10 @@ export default function Preview() {
                     console.log('No result from processing');
                 } else {
                     console.log('Image processed successfully');
+                    const resultsPath = useAIProcessing ? '/AIresults' : '/results';
                     
                     router.push({
-                        pathname: '/results',
+                        pathname: resultsPath,
                         params: {
                             result: JSON.stringify(result)
                         },
@@ -94,6 +97,10 @@ export default function Preview() {
         router.back();
     };
 
+    const toggleSwitch = () => {
+        setUseAIProcessing(!useAIProcessing);
+    };
+
     return (
         <ImageBackground source={require('@/assets/images/bg-home.png')} style={{ width: '100%', height: '100%'}} resizeMode='cover'>
             <View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0, 0, 0, 0.8)' }} />
@@ -121,6 +128,20 @@ export default function Preview() {
                         <ThemedText lightColor="white">No image selected</ThemedText>
                     </View>
                 )}
+                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+                    <ThemedText lightColor="white">Standard</ThemedText>
+                    <Switch
+                        trackColor={{ false: '#767577', true: '#0DEBCC' }}
+                        thumbColor={useAIProcessing ? '#f4f3f4' : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={toggleSwitch}
+                        value={useAIProcessing}
+                        style={{ marginHorizontal: 10 }}
+                    />
+                    <ThemedText lightColor="white">Gemini AI</ThemedText>
+                </View>
+
+
                 <View style={{ flexDirection: 'row', gap: 16, marginTop: 10, marginBottom: 64 }}>
                     <ActionButton 
                         icon="clock.fill" 

@@ -53,6 +53,15 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="chart.bar.doc.horizontal.fill" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="AIresults"
+        options={{
+          title: 'AI',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="chart.bar.doc.horizontal.fill" color={color} />,
+        }}
+      />
+
+
 
     </Tabs>
   );

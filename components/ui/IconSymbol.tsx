@@ -20,6 +20,7 @@ const MAPPING = {
   'bag.fill': 'image',
   'circle.fill': 'circle',
   'chart.bar.doc.horizontal.fill': 'bar-chart',
+  'ai.fill': 'auto-fix-high',
 
 } as Partial<
   Record<

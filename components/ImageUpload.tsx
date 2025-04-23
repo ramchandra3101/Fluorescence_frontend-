@@ -21,7 +21,7 @@ const ImagUpload = async () => {
 
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
-            allowsEditing: false,
+            allowsEditing: true,
             quality: 1,
             });
         
